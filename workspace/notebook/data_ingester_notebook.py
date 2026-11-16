@@ -179,6 +179,9 @@ profit_aggregation.write.format("delta").mode("overwrite").saveAsTable(
     f"{CATALOG}.{SCHEMA}.profit_aggregation"
 )
 
+master_df.createOrReplaceTempDF('master_df')
+
+
 # Using SQL output the following aggregates
 # Profit by Year
 profit_by_year = spark.sql("""SELECT
@@ -224,6 +227,5 @@ outputs = {
 }
 
 for table_name, df in outputs.items():
-    df.write.format("delta").mode("overwrite").saveAsTable(
-        f"{CATALOG}.{SCHEMA}.{table_name}"
-    )
+    print(f"--------------------------------{table_name}--------------------------------------------------")
+    df.display()
